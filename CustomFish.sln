@@ -5,6 +5,8 @@ VisualStudioVersion = 15.0.28010.2036
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "FishFramework", "FishFramework\FishFramework.csproj", "{9E640CC1-0E58-459E-AE75-CF57E053D859}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MinecraftFish", "MinecraftFish\MinecraftFish.csproj", "{6ADAB4A2-A5EE-46CC-9B52-389C90834410}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -15,6 +17,10 @@ Global
 		{9E640CC1-0E58-459E-AE75-CF57E053D859}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{9E640CC1-0E58-459E-AE75-CF57E053D859}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{9E640CC1-0E58-459E-AE75-CF57E053D859}.Release|Any CPU.Build.0 = Release|Any CPU
+		{6ADAB4A2-A5EE-46CC-9B52-389C90834410}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{6ADAB4A2-A5EE-46CC-9B52-389C90834410}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{6ADAB4A2-A5EE-46CC-9B52-389C90834410}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{6ADAB4A2-A5EE-46CC-9B52-389C90834410}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
