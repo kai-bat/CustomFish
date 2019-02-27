@@ -15,7 +15,7 @@ namespace FishFramework
 
         public AssetBundle bundle;
         public string fileName;
-        public Sprite sprite;
+        public Atlas.Sprite sprite;
 
         public bool isPickupable;
         public float scale;
@@ -25,6 +25,7 @@ namespace FishFramework
 
         public void Register()
         {
+            Console.WriteLine("[FishFramework] Creating fish: " + displayName);
             TechType type = TechTypeHandler.AddTechType(id, displayName, tooltip);
 
             FishSpawner.fishTechTypes.Add(type);
@@ -35,7 +36,14 @@ namespace FishFramework
             fish.swimSpeed = swimSpeed;
             fish.swimRadius = swimRadius;
             fish.pickupable = isPickupable;
-            SpriteHandler.RegisterSprite(type, "Assets/Raw_Cod.png");
+            try
+            {
+                SpriteHandler.RegisterSprite(type, sprite);
+            }
+            catch
+            {
+                Console.WriteLine("[FishFramework] Could not register sprite");
+            }
             PrefabHandler.RegisterPrefab(fish);
         }
     }

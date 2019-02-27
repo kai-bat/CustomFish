@@ -7,11 +7,11 @@ using System.Reflection;
 
 namespace FishFramework
 {
-    public class HarmonyInitalizer
+    public class MainInit
     {
-        public static void HarmonyInit()
+        public static void Init()
         {
-            HarmonyInstance harm = HarmonyInstance.Create("customfish");
+            HarmonyInstance harm = HarmonyInstance.Create("Kylinator25-FishFramework");
             harm.PatchAll(Assembly.GetExecutingAssembly());
         }
     }

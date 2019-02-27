@@ -5,7 +5,6 @@ using System.Text;
 using UnityEngine;
 using System.IO;
 using FishFramework;
-using Harmony;
 
 namespace MinecraftFish
 {
@@ -15,7 +14,6 @@ namespace MinecraftFish
 
         public static void Patch ()
         {
-            HarmonyInitalizer.HarmonyInit();
             bundle = AssetBundle.LoadFromFile(Path.Combine(Environment.CurrentDirectory, "QMods/MinecraftFish/fishassets"));
 
             CustomFish cod = new CustomFish();
@@ -32,9 +30,18 @@ namespace MinecraftFish
             cod.swimRadius = Vector3.one * 10f;
             cod.swimSpeed = 7f;
 
-            Sprite codsprite = bundle.LoadAsset<Sprite>("Sprites/Raw_Cod.png");
-
             cod.Register();
+
+            try
+            {
+                Sprite codsprite = bundle.LoadAsset<Sprite>("Sprites/Raw_Cod.png");
+
+                Atlas.Sprite atlasSprite = new Atlas.Sprite(codsprite.texture);
+            }
+            catch
+            {
+                Console.WriteLine("[MinecraftFish] Could not create sprite");
+            }
         }
     }
 }
