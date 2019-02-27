@@ -5,7 +5,7 @@ using System.Text;
 using UnityEngine;
 using System.IO;
 using FishFramework;
-using SMLHelper.V2.Handlers;
+using Harmony;
 
 namespace MinecraftFish
 {
@@ -15,6 +15,7 @@ namespace MinecraftFish
 
         public static void Patch ()
         {
+            HarmonyInitalizer.HarmonyInit();
             bundle = AssetBundle.LoadFromFile(Path.Combine(Environment.CurrentDirectory, "QMods/MinecraftFish/fishassets"));
 
             CustomFish cod = new CustomFish();
@@ -25,8 +26,11 @@ namespace MinecraftFish
             cod.bundle = bundle;
             cod.fileName = "Assets/Prefabs/CodFish.prefab";
 
-            cod.scale = 0.1f;
+            cod.scale = 0.07f;
             cod.isPickupable = true;
+
+            cod.swimRadius = Vector3.one * 10f;
+            cod.swimSpeed = 7f;
 
             Sprite codsprite = bundle.LoadAsset<Sprite>("Sprites/Raw_Cod.png");
 

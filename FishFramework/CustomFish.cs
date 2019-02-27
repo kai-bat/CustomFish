@@ -20,11 +20,21 @@ namespace FishFramework
         public bool isPickupable;
         public float scale;
 
+        public float swimSpeed;
+        public Vector3 swimRadius;
+
         public void Register()
         {
             TechType type = TechTypeHandler.AddTechType(id, displayName, tooltip);
 
-            CustomFishPrefab fish = new CustomFishPrefab(bundle, id, fileName, scale, isPickupable, type);
+            FishSpawner.fishTechTypes.Add(type);
+
+            CustomFishPrefab fish = new CustomFishPrefab(id, fileName, type);
+            fish.bundle = bundle;
+            fish.scale = scale;
+            fish.swimSpeed = swimSpeed;
+            fish.swimRadius = swimRadius;
+            fish.pickupable = isPickupable;
             SpriteHandler.RegisterSprite(type, "Assets/Raw_Cod.png");
             PrefabHandler.RegisterPrefab(fish);
         }
