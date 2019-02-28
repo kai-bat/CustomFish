@@ -16,6 +16,8 @@ namespace MinecraftFish
         {
             bundle = AssetBundle.LoadFromFile(Path.Combine(Environment.CurrentDirectory, "QMods/MinecraftFish/fishassets"));
 
+            TropicalFishGenerator.Init();
+
             CustomFish cod = new CustomFish();
             cod.id = "MineCod";
             cod.displayName = "Cod";
@@ -32,15 +34,30 @@ namespace MinecraftFish
 
             cod.Register();
 
-            try
+            int index = 0;
+            foreach (string tropicalPrefab in TropicalFishGenerator.tropicalFishPrefabFiles)
             {
-                Sprite codsprite = bundle.LoadAsset<Sprite>("Sprites/Raw_Cod.png");
+                Console.WriteLine($"[MinecraftFish] Creating tropical fish with filename: {tropicalPrefab}");
+                CustomFish tropical = new CustomFish();
+                tropical.id = "Tropical"+index;
+                index++;
+                tropical.displayName = "Tropical Fish";
+                tropical.tooltip = "A lovely colourful tropical fish";
 
-                Atlas.Sprite atlasSprite = new Atlas.Sprite(codsprite.texture);
-            }
-            catch
-            {
-                Console.WriteLine("[MinecraftFish] Could not create sprite");
+                tropical.bundle = bundle;
+                tropical.fileName = tropicalPrefab;
+
+                tropical.scale = 0.07f;
+                tropical.isPickupable = true;
+
+                tropical.swimRadius = Vector3.one * 10f;
+                tropical.swimSpeed = 7f;
+                tropical.components = new List<Type>
+                {
+                    typeof(TropicalFish)
+                };
+
+                tropical.Register();
             }
         }
     }

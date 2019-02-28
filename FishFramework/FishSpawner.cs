@@ -32,10 +32,23 @@ namespace FishFramework
             }
             if(Random.value < 0.1f)
             {
-                int randomIndex = Random.Range(0, fishTechTypes.Count - 1);
+                Console.WriteLine($"[FishFramework] Selecting fish out of {fishTechTypes.Count} total types");
+                int randomIndex = Random.Range(0, fishTechTypes.Count);
                 TechType randomFish = fishTechTypes[randomIndex];
 
                 GameObject fish = CraftData.InstantiateFromPrefab(randomFish);
+                // Deletes the fish if it is a ground creature spawned in water
+                if (fish.GetComponent<WalkOnGround>() && !__instance.GetComponent<WalkOnGround>())
+                {
+                    GameObject.Destroy(fish);
+                    return;
+                }
+                // Deletes the fish if it is a water creature spawned on ground
+                if (!fish.GetComponent<WalkOnGround>() && __instance.GetComponent<WalkOnGround>())
+                {
+                    GameObject.Destroy(fish);
+                    return;
+                }
                 fish.transform.position = __instance.transform.position;
 
                 usedCreatures.Add(__instance);

@@ -12,9 +12,12 @@ namespace FishFramework
         public AssetBundle bundle;
         public float scale;
         public bool pickupable;
+        public bool isWaterCreature = true;
 
         public float swimSpeed;
         public Vector3 swimRadius;
+
+        public List<Type> componentsToAdd = new List<Type>();
 
         public CustomFishPrefab(string classId, string prefabFileName, TechType techType = TechType.None) : base(classId, prefabFileName, techType)
         {
@@ -64,11 +67,22 @@ namespace FishFramework
             creature.initialCuriosity = AnimationCurve.Linear(0f, 0.5f, 1f, 0.5f);
             creature.initialFriendliness = AnimationCurve.Linear(0f, 0.5f, 1f, 0.5f);
             creature.initialHunger = AnimationCurve.Linear(0f, 0.5f, 1f, 0.5f);
-            SwimBehaviour behaviour = mainObj.AddOrGet<SwimBehaviour>();
-            SwimRandom swim = mainObj.AddOrGet<SwimRandom>();
-            swim.swimVelocity = swimSpeed;
-            swim.swimRadius = swimRadius;
-            swim.swimInterval = 1f;
+            SwimBehaviour behaviour = null;
+            if (isWaterCreature)
+            {
+                behaviour = mainObj.AddOrGet<SwimBehaviour>();
+                SwimRandom swim = mainObj.AddOrGet<SwimRandom>();
+                swim.swimVelocity = swimSpeed;
+                swim.swimRadius = swimRadius;
+                swim.swimInterval = 1f;
+            }
+            else
+            {
+                behaviour = mainObj.AddOrGet<WalkBehaviour>();
+                WalkOnGround walk = mainObj.AddOrGet<WalkOnGround>();
+                OnSurfaceMovement move = mainObj.AddOrGet<OnSurfaceMovement>();
+                move.onSurfaceTracker = mainObj.AddOrGet<OnSurfaceTracker>();
+            }
             Locomotion loco = mainObj.AddOrGet<Locomotion>();
             loco.useRigidbody = rb;
             mainObj.AddOrGet<EcoTarget>().type = EcoTargetType.Peeper;
@@ -85,6 +99,20 @@ namespace FishFramework
             if (pickupable)
             {
                 mainObj.AddOrGet<Pickupable>();
+            }
+
+            Console.WriteLine("[FishFramework] Adding custom components");
+
+            foreach (Type type in componentsToAdd)
+            {
+                try
+                {
+                    mainObj.AddComponent(type);
+                }
+                catch
+                {
+                    Console.WriteLine("[FishFramework] Failed to add component "+type.Name+" to GameObject");
+                }
             }
 
             return mainObj;
