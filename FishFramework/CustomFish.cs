@@ -69,15 +69,16 @@ namespace FishFramework
 
             FishSpawner.fishTechTypes.Add(type);
 
-            CustomFishPrefab fish = new CustomFishPrefab(id, fileName, type);
-            fish.bundle = bundle;
-            fish.scale = scale;
-            fish.swimSpeed = swimSpeed;
-            fish.swimRadius = swimRadius;
-            fish.pickupable = isPickupable;
-            fish.componentsToAdd = components;
-            fish.isWaterCreature = isWaterCreature;
-
+            CustomFishPrefab fish = new CustomFishPrefab(id, fileName, type) {
+                bundle = this.bundle,
+                scale = this.scale,
+                swimSpeed = this.swimSpeed,
+                swimRadius = this.swimRadius,
+                pickupable = this.isPickupable,
+                componentsToAdd = this.components,
+                isWaterCreature = this.isWaterCreature
+            }
+            
             PrefabHandler.RegisterPrefab(fish);
         }
     }
